@@ -20,7 +20,7 @@
   "homepage": "https://github.com/gnehs/subtitle-translator#readme",
   "dependencies": {
     "colors": "^1.4.0",
-    "openai": "^3.2.1",
+    "openai": "^4.95.1",
     "subtitle": "^4.2.1"
   },
   "publishConfig": {

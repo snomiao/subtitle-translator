@@ -1,19 +1,19 @@
 import fs from 'fs'
 import colors from 'colors'
-import { Configuration, OpenAIApi } from 'openai'
+import OpenAI, { Configuration, OpenAIApi } from 'openai'
 import { parseSync, stringifySync } from 'subtitle'
-const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'))
+import { readFile } from 'fs/promises'
+const config = JSON.parse(await readFile('./config.json', 'utf8'))
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: config.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 let subtitles = fs.readdirSync('./src')
 let supportExtensions = ['srt', 'vtt']
 for (let subtitleFile of subtitles) {
   if (!supportExtensions.includes(subtitleFile.split('.').pop())) continue
-  let subtitle = fs.readFileSync(`./src/${subtitleFile}`, 'utf8')
+  let subtitle = await readFile(`./src/${subtitleFile}`, 'utf8')
   subtitle = parseSync(subtitle)
   subtitle = subtitle.filter(line => line.type === 'cue')
 
