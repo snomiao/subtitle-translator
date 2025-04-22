@@ -9,3 +9,7 @@ config.json
 /src/*.url
 /.idea
 
+.env
+/res*
+
+reference.txt
