@@ -19,31 +19,35 @@ if (import.meta.main) {
       "Spanish",
       "German",
       "Russian",
-      "Italian",
-      "Portuguese",
       "Arabic",
-      "Turkish",
-      "Thai",
-      "Vietnamese",
-      "Indonesian",
-      "Malay",
-      "Filipino",
-      "Hindi",
-      "Bengali",
-      "Urdu",
-      "Persian",
-      "Hebrew",
-      "Swedish",
-      "Norwegian",
-      "Danish",
-      "Finnish",
+      // "Italian",
+      // "Portuguese",
+      // "Turkish",
+      // "Thai",
+      // "Vietnamese",
+      // "Indonesian",
+      // "Malay",
+      // "Filipino",
+      // "Hindi",
+      // "Bengali",
+      // "Urdu",
+      // "Persian",
+      // "Hebrew",
+      // "Swedish",
+      // "Norwegian",
+      // "Danish",
+      // "Finnish",
     ],
-    (lang) =>
-      subtitleTranslator({
+    async (lang) => {
+      const outdir = `./res-${lang}`;
+      await subtitleTranslator({
         language: lang,
         input: "./src/*.{srt,vtt}",
-        outdir: `./res-${lang}`,
-      }),
+        outdir,
+      });
+      await Bun.$`zip -r ${outdir}.zip ${outdir}`;
+      return lang;
+    },
     { concurrency: 1 }
   );
 }
